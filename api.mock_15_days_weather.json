@@ -1,0 +1,176 @@
+{
+    "id": 8284,
+    "name": "Vitória",
+    "state": "ES",
+    "country": "BR",
+    "data": [
+        {
+            "date": "2024-08-22",
+            "datebr": "22/08/2024",
+            "humidity": {
+                "min": 64,
+                "max": 100
+            },
+            "rain": {
+                "precipitation": 0
+            },
+            "wind": {
+                "velocity": 17,
+                "direction": "NE",
+                "direction_degrees": 130
+            },
+            "thermal_sensation": {
+                "min": 21,
+                "max": 23
+            },
+            "temperature": {
+                "min": 18,
+                "max": 28
+            }
+        },
+        {
+            "date": "2024-08-23",
+            "datebr": "23/08/2024",
+            "humidity": {
+                "min": 51,
+                "max": 92
+            },
+            "rain": {
+                "precipitation": 0
+            },
+            "wind": {
+                "velocity": 24,
+                "direction": "N",
+                "direction_degrees": 48
+            },
+            "thermal_sensation": {
+                "min": 21,
+                "max": 24
+            },
+            "temperature": {
+                "min": 20,
+                "max": 31
+            }
+        },
+        {
+            "date": "2024-08-24",
+            "datebr": "24/08/2024",
+            "humidity": {
+                "min": 50,
+                "max": 90
+            },
+            "rain": {
+                "precipitation": 0
+            },
+            "wind": {
+                "velocity": 26,
+                "direction": "N",
+                "direction_degrees": 32
+            },
+            "thermal_sensation": {
+                "min": 22,
+                "max": 25
+            },
+            "temperature": {
+                "min": 21,
+                "max": 32
+            }
+        },
+        {
+            "date": "2024-08-25",
+            "datebr": "25/08/2024",
+            "humidity": {
+                "min": 56,
+                "max": 96
+            },
+            "rain": {
+                "precipitation": 0
+            },
+            "wind": {
+                "velocity": 14,
+                "direction": "N",
+                "direction_degrees": 131
+            },
+            "thermal_sensation": {
+                "min": 21,
+                "max": 24
+            },
+            "temperature": {
+                "min": 20,
+                "max": 28
+            }
+        },
+        {
+            "date": "2024-08-26",
+            "datebr": "26/08/2024",
+            "humidity": {
+                "min": 64,
+                "max": 93
+            },
+            "rain": {
+                "precipitation": 4
+            },
+            "wind": {
+                "velocity": 26,
+                "direction": "SSW",
+                "direction_degrees": 207
+            },
+            "thermal_sensation": {
+                "min": 18,
+                "max": 22
+            },
+            "temperature": {
+                "min": 19,
+                "max": 22
+            }
+        },
+        {
+            "date": "2024-08-27",
+            "datebr": "27/08/2024",
+            "humidity": {
+                "min": 54,
+                "max": 83
+            },
+            "rain": {
+                "precipitation": 0
+            },
+            "wind": {
+                "velocity": 19,
+                "direction": "SSW",
+                "direction_degrees": 197
+            },
+            "thermal_sensation": {
+                "min": 18,
+                "max": 21
+            },
+            "temperature": {
+                "min": 18,
+                "max": 24
+            }
+        },
+        {
+            "date": "2024-08-28",
+            "datebr": "28/08/2024",
+            "humidity": {
+                "min": 52,
+                "max": 86
+            },
+            "rain": {
+                "precipitation": 0
+            },
+            "wind": {
+                "velocity": 10,
+                "direction": "SSE",
+                "direction_degrees": 184
+            },
+            "thermal_sensation": {
+                "min": 19,
+                "max": 21
+            },
+            "temperature": {
+                "min": 16,
+                "max": 25
+            }
+        }
+    ]
+}

@@ -1,5 +1,8 @@
-import { Pressable, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
+
 import { styles } from './styles';
+
+import atualizar from '../../assets/icons/system/atualizar.png';
 
 /**
  *
@@ -14,6 +17,8 @@ export function Button({ children, disabled, ...props }) {
                 android_ripple={{ color: '#444' }}
                 style={ [styles.button, disabled && styles.buttonDisabled] }
                 {...props} >
+
+                <Image source={ atualizar } style={{ width: 16, height: 16 }}/>
 
                 <Text style={ [styles.buttonLabel, disabled && styles.buttonLabelDisabled] }>
                     { children }

@@ -1,0 +1,17 @@
+{
+  "id": 8284,
+  "name": "Vitória",
+  "state": "ES",
+  "country": "BR",
+  "data": {
+    "temperature": 29,
+    "wind_direction": "N",
+    "wind_velocity": 32,
+    "humidity": 58,
+    "condition": "Sol com muitas nuvens",
+    "pressure": 1015,
+    "icon": "2r",
+    "sensation": null,
+    "date": "2024-08-22 17:35:54"
+  }
+}

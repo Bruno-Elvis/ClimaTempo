@@ -8,13 +8,13 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         height: 48,
         paddingHorizontal: 16,
-        color: 'white'
+        color: 'white',
 
     },
 
     inputFocusedStyle: {
-        borderColor: '#ddd'
+        borderColor: '#ddd',
 
-    }
+    },
 
 });

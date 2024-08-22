@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     buttonWrapper: {
         overflow: 'hidden',
-        borderRadius: 8
+        borderRadius: 8,
 
     },
 
@@ -12,26 +12,28 @@ export const styles = StyleSheet.create({
         backgroundColor: '#222',
         height: 48,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'row',
+        gap: 10,
 
     },
 
     buttonDisabled: {
-        backgroundColor: '#ccc'
+        backgroundColor: '#ccc',
 
     },
 
     buttonLabel: {
         color: '#fff',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
 
     },
 
     buttonLabelDisabled: {
         color: '#888',
-        fontWeight: 'bold'
-        
-    }
+        fontWeight: 'bold',
+
+    },
 
 
 });
