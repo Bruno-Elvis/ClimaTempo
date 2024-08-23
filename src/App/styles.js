@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     },
 
     currentContainer: {
-        flex: 0.6,
+        flex: 0.7,
         backgroundColor: '#444',
         borderRadius: 8,
         alignItems: 'center',
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
 
     predictContainer: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#444',
         borderRadius: 8,
         flexDirection: 'row',
         padding: 10,
@@ -39,19 +39,46 @@ export const styles = StyleSheet.create({
 
     todayContainer: {
         flex: 1,
-        backgroundColor: '#0400ff',
+        backgroundColor: '#333',
         borderRadius: 8,
+        paddingTop: 10,
+
     },
 
     tomorrowContainer: {
         flex: 1,
-        backgroundColor: '#1eff00',
+        backgroundColor: '#333',
         borderRadius: 8,
+        paddingTop: 10,
+
     },
 
     labelInfo: {
         flexDirection: 'row',
         gap: 10,
+
+    },
+
+    labelPredict: {
+        alignContent: 'center',
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        fontSize: 24,
+        color: 'white',
+
+    },
+
+    predictTempIcons: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        gap: 50,
+        top: 10,
+
+    },
+
+    predictTempData: {
+        top: 10,
+        alignItems: 'center',
 
     },
 
