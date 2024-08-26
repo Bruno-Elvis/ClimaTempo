@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 
-import { SafeAreaView, View, Image, Text } from 'react-native';
+import { SafeAreaView, View, Image, Text, Modal, Pressable, ActivityIndicator } from 'react-native';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { styles } from './styles';
 
-import { Button } from '../components/Button';
+import { ButtonStyled } from '../components/Button';
 import { TextStyled } from '../components/Text';
 import IconWeather from '../components/IconWather';
 
@@ -15,6 +15,8 @@ import termometro_st from '../assets/icons/system/termometro_st.png';
 import umidade from '../assets/icons/system/umidade_percent.png';
 import precipitacao from '../assets/icons/system/precipitacao.png';
 import local from '../assets/icons/system/local.png';
+
+import mockPredictWeatherAPI from '../../api.mock_15_days_weather.json';
 
 
 export default function App() {
@@ -26,11 +28,37 @@ export default function App() {
   const [currentCondition, setCurrentCondition] = useState('');
   const [currentIcon, setCurrentIcon] = useState('');
 
-  useEffect(() => {
-    (async function loadWeatherData () {
+  const [predictMinTemperatureToday, setPredictMinTemperatureToday] = useState(0);
+  const [predictMaxTemperatureToday, setPredictMaxTemperatureToday] = useState(0);
+  const [predictMinThermalSensationToday, setPredictMinThermalSensationToday] = useState(0);
+  const [predictMaxThermalSensationToday, setPredictMaxThermalSensationToday] = useState(0);
+  const [predictMinHumidityToday, setPredictMinHumidityToday] = useState(0);
+  const [predictMaxHumidityToday, setPredictMaxHumidityToday] = useState(0);
+  const [predictPrecipitationToday, setPredictPrecipitationToday] = useState(0);
+
+  const [predictMinTemperatureTomorrow, setPredictMinTemperatureTomorrow] = useState(0);
+  const [predictMaxTemperatureTomorrow, setPredictMaxTemperatureTomorrow] = useState(0);
+  const [predictMinThermalSensationTomorrow, setPredictMinThermalSensationTomorrow] = useState(0);
+  const [predictMaxThermalSensationTomorrow, setPredictMaxThermalSensationTomorrow] = useState(0);
+  const [predictMinHumidityTomorrow, setPredictMinHumidityTomorrow] = useState(0);
+  const [predictMaxHumidityTomorrow, setPredictMaxHumidityTomorrow] = useState(0);
+  const [predictPrecipitationTomorrow, setPredictPrecipitationTomorrow] = useState(0);
+
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  const loadCurrentWeatherData = useCallback(async () => {
+    setIsLoading(true);
+
+    let data = null;
+
+    try {
       let response = await fetch('http://apiadvisor.climatempo.com.br/api/v1/weather/locale/8284/current?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
 
-      let data = await response.json();
+      data = await response.json();
+
+      setModalIsVisible(response.ok);
 
       setCurrentLocalName(data.name);
       setCurrentLocalState(data.state);
@@ -40,17 +68,67 @@ export default function App() {
       setCurrentIcon(data.data.icon);
       setCurrentDateWeather(new Date(data.data.date).toLocaleDateString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}));
 
-    })();
+    } catch (error) {
+      console.log('Ocorreu um erro ao obter os dados da API', error);
+
+    } finally {
+      setIsLoading(false);
+
+    }
 
   }, []);
 
+  const loadPredictWeatherData = useCallback(async () => {
+    setIsLoading(true);
+
+    let data = null;
+
+    try {
+      let response = await fetch('http://apiadvisor.climatempo.com.br/api/v2/forecast/locale/8284/days/15?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
+
+      data = await response.json();
+
+      setModalIsVisible(response.ok);
+
+      setPredictMinTemperatureToday(data.data[0].temperature.min);
+      setPredictMaxTemperatureToday(data.data[0].temperature.max);
+      setPredictMinThermalSensationToday(data.data[0].thermal_sensation.min);
+      setPredictMaxThermalSensationToday(data.data[0].thermal_sensation.max);
+      setPredictMinHumidityToday(data.data[0].humidity.min);
+      setPredictMaxHumidityToday(data.data[0].humidity.max);
+      setPredictPrecipitationToday(data.data[0].rain.precipitation);
+
+      setPredictMinTemperatureTomorrow(data.data[1].temperature.min);
+      setPredictMaxTemperatureTomorrow(data.data[1].temperature.max);
+      setPredictMinThermalSensationTomorrow(data.data[1].thermal_sensation.min);
+      setPredictMaxThermalSensationTomorrow(data.data[1].thermal_sensation.max);
+      setPredictMinHumidityTomorrow(data.data[1].humidity.min);
+      setPredictMaxHumidityTomorrow(data.data[1].humidity.max);
+      setPredictPrecipitationTomorrow(data.data[1].rain.precipitation);
+
+    } catch (error) {
+      console.log('Ocorreu um erro ao obter os dados da API', error);
+
+    } finally {
+      setIsLoading(false);
+
+    }
+
+  }, []);
+
+  useEffect(() => {
+    loadCurrentWeatherData();
+    loadPredictWeatherData();
+
+  }, [loadCurrentWeatherData, loadPredictWeatherData]);
+
 
   function handlePressButton () {
-    alert('Atualizado');
+    loadCurrentWeatherData();
+    loadPredictWeatherData();
 
   }
 
-  // new Date(minhaData.date).toLocaleDateString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'});
 
   return (
     <SafeAreaView style={ styles.wrapper }>
@@ -59,26 +137,26 @@ export default function App() {
           <View style={ styles.labelInfo }>
             <Image source={local} style={{width: 12, height: 16, top: 2}}/>
 
-            <TextStyled size={{fontSize: 20}}>{currentLocalName} - {currentLocalState}  {currentDateWeather}</TextStyled>
+            <TextStyled size={{fontSize: 20}}>{ currentLocalName } - { currentLocalState }  { currentDateWeather }</TextStyled>
 
           </View>
 
           <View style={ styles.labelInfo }>
             <Image source={termometro} style={{width: 10, height: 20}}/>
 
-            <TextStyled>TEMPERATURA: {currentTemperature}°C</TextStyled>
+            <TextStyled>TEMPERATURA: { currentTemperature }°C</TextStyled>
 
           </View>
 
           <View style={ styles.labelInfo }>
             <Image source={umidade} style={{width: 13, height: 18}}/>
 
-            <TextStyled>UMIDADE: {currentHumidity}%</TextStyled>
+            <TextStyled>UMIDADE: { currentHumidity }%</TextStyled>
 
           </View>
 
           <View style={{alignItems: 'center', marginTop: 10}}>
-            <TextStyled>{currentCondition}</TextStyled>
+            <TextStyled>{ currentCondition }</TextStyled>
 
             <IconWeather iconType={ currentIcon } />
 
@@ -98,16 +176,16 @@ export default function App() {
 
             <View style={ styles.predictTempIcons }>
               <View style={ styles.predictTempData }>
-                <TextStyled>18°C</TextStyled>
+                <TextStyled>{ predictMinTemperatureToday }°C</TextStyled>
                 <TextStyled>•</TextStyled>
-                <TextStyled>28°C</TextStyled>
+                <TextStyled>{ predictMaxTemperatureToday }°C</TextStyled>
 
               </View>
 
               <View style={ styles.predictTempData }>
-                <TextStyled>21°C</TextStyled>
+                <TextStyled>{ predictMinThermalSensationToday }°C</TextStyled>
                 <TextStyled>•</TextStyled>
-                <TextStyled>23°C</TextStyled>
+                <TextStyled>{ predictMaxThermalSensationToday }°C</TextStyled>
 
               </View>
 
@@ -115,11 +193,11 @@ export default function App() {
 
             <Image source={umidade} style={{width: 23, height: 32, alignSelf: 'center', top: 30, marginBottom: 40}}/>
 
-            <TextStyled>64% - 100%</TextStyled>
+            <TextStyled>{ predictMinHumidityToday }% - { predictMaxHumidityToday }%</TextStyled>
 
             <Image source={precipitacao} style={{width: 35, height: 30, alignSelf: 'center', top: 30, marginBottom: 40}}/>
 
-            <TextStyled>0 mm</TextStyled>
+            <TextStyled>{ predictPrecipitationToday } mm</TextStyled>
 
           </View>
 
@@ -134,16 +212,16 @@ export default function App() {
 
             <View style={ styles.predictTempIcons }>
               <View style={ styles.predictTempData }>
-                <TextStyled>20°C</TextStyled>
+                <TextStyled>{ predictMinTemperatureTomorrow }°C</TextStyled>
                 <TextStyled>•</TextStyled>
-                <TextStyled>31°C</TextStyled>
+                <TextStyled>{ predictMaxTemperatureTomorrow }°C</TextStyled>
 
               </View>
 
               <View style={ styles.predictTempData }>
-                <TextStyled>21°C</TextStyled>
+                <TextStyled>{ predictMinThermalSensationTomorrow }°C</TextStyled>
                 <TextStyled>•</TextStyled>
-                <TextStyled>24°C</TextStyled>
+                <TextStyled>{ predictMaxThermalSensationTomorrow }°C</TextStyled>
 
               </View>
 
@@ -151,19 +229,46 @@ export default function App() {
 
             <Image source={umidade} style={{width: 23, height: 32, alignSelf: 'center', top: 30, marginBottom: 40}}/>
 
-            <TextStyled>51% - 92%</TextStyled>
+            <TextStyled>{ predictMinHumidityTomorrow }% - { predictMaxHumidityTomorrow }%</TextStyled>
 
             <Image source={precipitacao} style={{width: 35, height: 30, alignSelf: 'center', top: 30, marginBottom: 40}}/>
 
-            <TextStyled>0 mm</TextStyled>
+            <TextStyled>{ predictPrecipitationTomorrow } mm</TextStyled>
 
           </View>
 
         </View>
 
-        <Button onPress={handlePressButton} >ATUALIZAR DADOS</Button>
+        {!isLoading && <ButtonStyled onPress={handlePressButton} >ATUALIZAR DADOS</ButtonStyled>}
 
       </View>
+
+      <Modal
+        visible={ modalIsVisible }
+        animationType="fade"
+        statusBarTranslucent
+        transparent
+        onRequestClose={() => setModalIsVisible(false)} >
+
+        <View style={ styles.modalOverlay }>
+          <View style={ styles.modalContainer } >
+            <TextStyled>DADOS ATUALZIADOS!</TextStyled>
+
+            <Pressable
+              style={{backgroundColor: 'black', marginTop: 10, padding: 10, borderRadius: 8}}
+              onPress={() => setModalIsVisible(false)} >
+
+                <Text>FECHAR</Text>
+
+            </Pressable>
+
+          </View>
+        </View>
+
+      </Modal>
+
+      {isLoading && <ActivityIndicator size="large" style={{alignSelf: 'center'}} />}
+
 
     </SafeAreaView>
 

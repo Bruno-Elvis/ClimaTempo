@@ -8,7 +8,7 @@ import atualizar from '../../assets/icons/system/atualizar.png';
  *
  * @param {import("react-native").PressableProps} props
  */
-export function Button({ children, disabled, ...props }) {
+export function ButtonStyled({ children, disabled, ...props }) {
     return (
         <View style={ styles.buttonWrapper }>
             <Pressable

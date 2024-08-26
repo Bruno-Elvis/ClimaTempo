@@ -82,4 +82,24 @@ export const styles = StyleSheet.create({
 
     },
 
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+    },
+
+    modalContainer: {
+        top: '50%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        backgroundColor: '#333',
+        width: 250,
+        height: 100,
+        borderRadius: 8,
+        borderWidth: 2,
+        borderColor: 'black',
+
+    },
+
 });
