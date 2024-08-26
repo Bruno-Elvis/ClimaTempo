@@ -16,8 +16,6 @@ import umidade from '../assets/icons/system/umidade_percent.png';
 import precipitacao from '../assets/icons/system/precipitacao.png';
 import local from '../assets/icons/system/local.png';
 
-import mockPredictWeatherAPI from '../../api.mock_15_days_weather.json';
-
 
 export default function App() {
   const [currentLocalName, setCurrentLocalName] = useState('');
