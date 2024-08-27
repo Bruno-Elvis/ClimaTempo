@@ -44,6 +44,7 @@ export default function App() {
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState('');
 
 
   const loadCurrentWeatherData = useCallback(async () => {
@@ -52,11 +53,16 @@ export default function App() {
     let data = null;
 
     try {
-      let response = await fetch('http://apiadvisor.climatempo.com.br/api/v1/weather/locale/8284/current?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
+      let response = await fetch('https://apiadvisor.climatempo.com.br/api/v1/weather/locale/8284/current?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
+
+      if (!response.ok || response.status > 299) {
+        throw new Error(response);
+
+      }
 
       data = await response.json();
 
-      setModalIsVisible(response.ok);
+      response.ok && setModalIsVisible(true);
 
       setCurrentLocalName(data.name);
       setCurrentLocalState(data.state);
@@ -66,8 +72,8 @@ export default function App() {
       setCurrentIcon(data.data.icon);
       setCurrentDateWeather(new Date(data.data.date).toLocaleDateString('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}));
 
-    } catch (error) {
-      console.log('Ocorreu um erro ao obter os dados da API', error);
+    } catch (response) {
+      setHasError(response.toString());
 
     } finally {
       setIsLoading(false);
@@ -82,11 +88,16 @@ export default function App() {
     let data = null;
 
     try {
-      let response = await fetch('http://apiadvisor.climatempo.com.br/api/v2/forecast/locale/8284/days/15?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
+      let response = await fetch('https://apiadvisor.climatempo.com.br/api/v2/forecast/locale/8284/days/15?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
+
+      if (!response.ok || response.status > 299) {
+        throw new Error(response);
+
+      }
 
       data = await response.json();
 
-      setModalIsVisible(response.ok);
+      response.ok && setModalIsVisible(true);
 
       setPredictMinTemperatureToday(data.data[0].temperature.min);
       setPredictMaxTemperatureToday(data.data[0].temperature.max);
@@ -104,8 +115,8 @@ export default function App() {
       setPredictMaxHumidityTomorrow(data.data[1].humidity.max);
       setPredictPrecipitationTomorrow(data.data[1].rain.precipitation);
 
-    } catch (error) {
-      console.log('Ocorreu um erro ao obter os dados da API', error);
+    } catch (response) {
+      setHasError(response.toString());
 
     } finally {
       setIsLoading(false);
@@ -237,7 +248,7 @@ export default function App() {
 
         </View>
 
-        {!isLoading && <ButtonStyled onPress={handlePressButton} >ATUALIZAR DADOS</ButtonStyled>}
+        {!isLoading && <ButtonStyled onPress={ handlePressButton } >ATUALIZAR DADOS</ButtonStyled>}
 
       </View>
 
@@ -255,6 +266,30 @@ export default function App() {
             <Pressable
               style={{backgroundColor: 'black', marginTop: 10, padding: 10, borderRadius: 8}}
               onPress={() => setModalIsVisible(false)} >
+
+                <Text>FECHAR</Text>
+
+            </Pressable>
+
+          </View>
+        </View>
+
+      </Modal>
+
+      <Modal
+        visible={ !!hasError }
+        animationType="fade"
+        statusBarTranslucent
+        transparent
+        onRequestClose={() => { setHasError(null); }} >
+
+        <View style={ styles.modalOverlay }>
+          <View style={ styles.modalContainer } >
+            <TextStyled>{ hasError }</TextStyled>
+
+            <Pressable
+              style={{backgroundColor: 'black', marginTop: 10, padding: 10, borderRadius: 8}}
+              onPress={() => { setHasError(null); }} >
 
                 <Text>FECHAR</Text>
 

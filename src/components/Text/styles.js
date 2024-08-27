@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     styledText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: 20,
         alignSelf: 'center',
 
     },

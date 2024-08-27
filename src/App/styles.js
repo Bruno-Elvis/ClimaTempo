@@ -2,7 +2,7 @@ import { StatusBar, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     wrapper: {
-        marginTop: StatusBar.currentHeight - 24,
+        marginTop: StatusBar.currentHeight - 48,
         flex: 1,
         backgroundColor: 'black',
 
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     },
 
     currentContainer: {
-        flex: 0.7,
+        flex: 1,
         backgroundColor: '#444',
         borderRadius: 8,
         alignItems: 'center',
@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
     labelInfo: {
         flexDirection: 'row',
         gap: 10,
+        top: 10,
 
     },
 
