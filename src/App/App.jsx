@@ -16,6 +16,8 @@ import umidade from '../assets/icons/system/umidade_percent.png';
 import precipitacao from '../assets/icons/system/precipitacao.png';
 import local from '../assets/icons/system/local.png';
 
+import { token_api } from '../token_api.json';
+
 
 export default function App() {
   const [currentLocalName, setCurrentLocalName] = useState('');
@@ -53,7 +55,7 @@ export default function App() {
     let data = null;
 
     try {
-      let response = await fetch('https://apiadvisor.climatempo.com.br/api/v1/weather/locale/8284/current?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
+      let response = await fetch(`https://apiadvisor.climatempo.com.br/api/v1/weather/locale/8284/current?token=${token_api}`, { method: 'GET' });
 
       if (!response.ok || response.status > 299) {
         throw new Error(response);
@@ -88,7 +90,7 @@ export default function App() {
     let data = null;
 
     try {
-      let response = await fetch('https://apiadvisor.climatempo.com.br/api/v2/forecast/locale/8284/days/15?token=20e937b2a78f3932a306e01ee5f05fd7', { method: 'GET' });
+      let response = await fetch(`https://apiadvisor.climatempo.com.br/api/v2/forecast/locale/8284/days/15?token=${token_api}`, { method: 'GET' });
 
       if (!response.ok || response.status > 299) {
         throw new Error(response);
